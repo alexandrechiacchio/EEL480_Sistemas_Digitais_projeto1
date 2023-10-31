@@ -16,12 +16,12 @@ entity contador is
 	port(
 		clk: in std_logic; -- clock
 		reset: in std_logic; -- reset
-		q: out unsigned (7 downto 0) := "00000000" -- saida
+		ent: out unsigned (7 downto 0) := "00000000" -- saida
 	);
 end contador;
 
 architecture Behavioral of contador is
-	signal q_var: unsigned (7 downto 0) := "00000000"; -- sinal em que fica minhas entradas A e B e conta
+	signal ent_cnt: unsigned (7 downto 0) := "00000000"; -- sinal em que fica minhas entradas A e B e conta
 
 begin
 
@@ -29,16 +29,16 @@ begin
 		variable t : integer range t_max downto 0 := 0; -- variavel que conta cada clock (50ns)
 		begin
 			if(reset = '1') then
-				q_var <= "00000000"; --zerar o contador quando o reset for habilitado
+				ent_cnt <= "00000000"; --zerar o contador quando o reset for habilitado
 			elsif rising_edge(clk) then
 				if (t <= t_max) then
 					t := t + 1;-- incremento o temporizador
 				else -- se passaram 2 segundos
-					q_var <= q_var + 1; -- incremento o contador
+					ent_cnt <= ent_cnt + 1; -- incremento o contador
 					t := 0; -- zerar o temporizador depois de incrementar o contador para recomeçar a contagem no temporizador
 				end if;
 			end if;
 	end process;
-	q <= q_var; -- var saida
+	ent <= ent_cnt; -- var saida
 
 end Behavioral;
