@@ -1,22 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    14:29:57 09/26/2023 
--- Design Name: 
--- Module Name:    ula - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_arith.all;
@@ -35,12 +16,13 @@ use IEEE.STD_LOGIC_arith.all;
 --use UNISIM.VComponents.all;
 
 entity ula is
-    Port ( opcode : in  STD_LOGIC_VECTOR (2 downto 0);
-           result : out  STD_LOGIC_VECTOR (3 downto 0);
-			  zero : out std_logic;
-			  overflow : out std_logic;
-			  negative : out std_logic;
-			  carry_out : out std_logic);
+    Port ( a, b : in  STD_LOGIC_VECTOR (3 downto 0);
+			opcode : in  STD_LOGIC_VECTOR (2 downto 0);
+           	result : out  STD_LOGIC_VECTOR (3 downto 0);
+			zero : out std_logic;
+			overflow : out std_logic;
+			negative : out std_logic;
+			carry_out : out std_logic);
 end ula;
 
 architecture structural of ula is
@@ -53,26 +35,18 @@ component somador4bit is --somador de 4 bits
 end component;
 
 component inverter is --componente que inverte os bits do input
-	Port ( x : in  STD_LOGIC_VECTOR (3 downto 0);
-          negated_x : out  STD_LOGIC_VECTOR (3 downto 0));
+	Port ( 	x : in  STD_LOGIC_VECTOR (3 downto 0);
+          	negated_x : out  STD_LOGIC_VECTOR (3 downto 0));
 end component;
 
 component diff is --componente que faz a diferença entre a e b
-    Port ( t : in  STD_LOGIC_VECTOR (3 downto 0);
-           r : in  STD_LOGIC_VECTOR (3 downto 0);
-			  negative : out  STD_LOGIC;
-           diff : out  STD_LOGIC_VECTOR (3 downto 0);
-			  comp2 : out  STD_LOGIC_VECTOR (3 downto 0);
-			  c_out : out  STD_LOGIC);
+    Port ( 	t : in  STD_LOGIC_VECTOR (3 downto 0);
+           	r : in  STD_LOGIC_VECTOR (3 downto 0);
+			negative : out  STD_LOGIC;
+           	diff : out  STD_LOGIC_VECTOR (3 downto 0);
+			comp2 : out  STD_LOGIC_VECTOR (3 downto 0);
+			c_out : out  STD_LOGIC);
 end component;
-
---operandos da ula
-signal a : STD_LOGIC_VECTOR (3 downto 0);
-signal b : STD_LOGIC_VECTOR (3 downto 0);
---sinais usandos no contador
-signal a_cnt : unsigned (3 downto 0) := (others => '0');
-signal b_cnt : unsigned (3 downto 0) := (others => '0');
-
 
 --declaração sinais usados
 signal negated_a : std_logic_vector (3 downto 0);
@@ -93,8 +67,6 @@ signal equality : STD_LOGIC;
 signal equality_vector : STD_LOGIC_VECTOR (3 downto 0);
 signal nn : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 signal mm : STD_LOGIC_VECTOR (3 downto 0) := "1111";
-signal clk : std_logic := '1';
-constant clk_period : time := 1000 ms;
 
 begin
 
@@ -176,31 +148,3 @@ begin
 			carry_out <= '0';
 	end case;
 end process;
-
--- processo do clock
-
-
-clk <= not clk after clk_period/2;
-
-
---processo do contador
-process (clk) begin 
-	
-	if rising_edge(clk) then
-		if b_cnt = unsigned(mm) then 
-			a_cnt <= a_cnt + 1;
-		end if;
-		b_cnt <= b_cnt + 1;
-	end if;
-	
-end process;
-
-process (a_cnt, b_cnt) begin
-	for i in 3 downto 0 loop	
-		a(i) <= a_cnt(i);
-		b(i) <= b_cnt(i);
-	end loop;
-end process;
-
-end structural;
-
