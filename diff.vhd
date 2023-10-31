@@ -1,48 +1,22 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    08:54:13 10/27/2023 
--- Design Name: 
--- Module Name:    diff - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+-- subtrator, toma duas entradas, realiza complemento a dois de uma e as soma
 
 entity diff is
-    Port ( t : in  STD_LOGIC_VECTOR (3 downto 0);
-           r : in  STD_LOGIC_VECTOR (3 downto 0);
-			  negative : out  STD_LOGIC;
-           diff : out  STD_LOGIC_VECTOR (3 downto 0);
-			  comp2 : out  STD_LOGIC_VECTOR (3 downto 0);
-           c_out : out  STD_LOGIC);
+    Port ( 	t : in  STD_LOGIC_VECTOR (3 downto 0);
+           	r : in  STD_LOGIC_VECTOR (3 downto 0);
+			negative : out  STD_LOGIC;
+           	diff : out  STD_LOGIC_VECTOR (3 downto 0);
+			comp2 : out  STD_LOGIC_VECTOR (3 downto 0);
+           	c_out : out  STD_LOGIC);
 end diff;
 
 architecture Behavioral of diff is
 
 component somador4bit is
 	port(	x, y: in STD_LOGIC_VECTOR(3 downto 0);
-			c_in: in std_logic; 
+			c_in: in std_logic;
 			s: out STD_LOGIC_VECTOR(3 downto 0);
 			c_out: out std_logic);
 end component;

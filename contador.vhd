@@ -2,25 +2,19 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+-- contador, conta a quantidade de ciclos de clock da placa
 
 entity contador is
-	generic(t_max : integer := 40000000); -- aguarda 2s
+	generic(t_max : integer := 100000000); --o sinal de clock da placa é de 50MHz, 100 milhões de ciclos, então, equivalem a 2 segundos
 	port(
 		clk: in std_logic; -- clock
 		reset: in std_logic; -- reset
-		ent: out unsigned (7 downto 0) := "00000000" -- saida
+		ent: out unsigned (7 downto 0) := "00000000" -- saida de 8 bits, os primeiros 4 são a primeira entrada e os 4 últimos a segunda entrada da ula
 	);
 end contador;
 
 architecture Behavioral of contador is
+
 	signal ent_cnt: unsigned (7 downto 0) := "00000000"; -- sinal em que fica minhas entradas A e B e conta
 
 begin
